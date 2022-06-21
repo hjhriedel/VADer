@@ -1,0 +1,53 @@
+{
+  "exp": {
+    "name": "new metrics"
+  },
+  "data_loader": {
+    "name": "data_loader_04.DataLoader",
+    "data_dir": "E:/Riedel/transformed/Data TrigG1 new Code/",
+    "sl":false,
+    "wl":true,
+    "str":false,
+    "acc":true,
+    "sl_num":4,
+    "wl_num":6,
+    "str_num":8,
+    "acc_num":10
+  },
+  "model":{
+    "name": "flexNet_00.Model",
+    "learning_rate": 0.001,
+    "optimizer": "adam",
+    "encode_layer": 1,
+    "decode_layer": 1,
+    "bottleneck_layer": 2,
+    "concat": false,
+    "pooling_steps": 4,
+    "label_as_img": false,
+    "channels": 10,
+    "n_filters": 32,
+    "batchnorm": true,
+    "loss": "binary_crossentropy",
+    "gamma": 9,
+    "lr": 0.001
+  },
+  "trainer":{
+    "name": "trainer.ModelTrainer",
+    "run":"Data TrigG1 new Code - Gamma 9",
+    "num_epochs": 150,
+    "batch_size": 16,
+    "shuffle": true,
+    "verbose_training": 2,
+    "save_pickle": true,
+    "steps_per_epoch": 150,
+    "validation_percentage": 0.2
+  },
+  "callbacks":{
+    "checkpoint_monitor": "val_recall",
+    "checkpoint_mode": "max",
+    "checkpoint_save_best_only": true,
+    "checkpoint_save_weights_only": true,
+    "checkpoint_verbose": 1,
+    "patience":30
+  }
+}

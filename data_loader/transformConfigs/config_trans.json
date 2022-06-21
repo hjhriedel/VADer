@@ -1,0 +1,14 @@
+{
+  "column names wl": ["wavelet name","scale min","scale max"],
+  "acc":
+      {
+          "wl": [["cgau1",8,50],["cgau1",1,8],["gaus1",6.5,35],["gaus1",0.6,6.5],["fbsp",10,40],["fbsp",1.5,10]]
+      },
+  "names": [["acc_li_", "idxl_acc"], ["acc_re_", "idxr_acc"], ["str_li_", "idxl_str"], ["str_re_", "idxr_str"]],
+  "crop":false,
+  "folder":"Data TrigG1 new Code",
+  "target":"Data TrigG1 new Code",
+  "n_jobs":-2,
+  "fs":600,
+  "range":5000
+  }
