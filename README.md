@@ -2,17 +2,17 @@
 <!-- <p align="right"><img src="https://github.com/ISMD-TU-Darmstadt/VADer/blob/main/utils/img/sdu-color-transparent.png" alt="Logo" width="80" height="80"></p> -->
 
 <h1 align="center">
-  <br>
-
-  </center>
   <img src="https://github.com/ISMD-TU-Darmstadt/VADer/blob/main/utils/img/sdu-color-transparent.png" alt="SDU" width="500">
-  <br>
   <br>
   <b>VADer</b>
   <br>
   <sub><sup>Virtual Axle Detector</sup></sub>
   <br>
 </h1>
+
+<p align="center">
+   <a href="https://zenodo.org/badge/latestdoi/505931268"><img src="https://zenodo.org/badge/505931268.svg" alt="DOI"></a>
+</p>
 
 # Introduction
 This is an implementation of the paper "Virtual Axle Detector based on Analysis of Bridge Acceleration Measurements by Fully Convolutional Network" using Python, TensorFlow and SciPy. The model detects train axles when passing over accelerometers installed anywhere on bridges.
@@ -24,7 +24,7 @@ The repository contains code for:
 - Evaluation 
 - Data transformation
 
-Data used in the article can be found here: https://doi.org/10.5281/zenodo.6782318 <br>
+Data used in the article can be found here: <a href="https://doi.org/10.5281/zenodo.6782319"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.6782319.svg" alt="DOI"></a>  <br>
 Script for data transformation from *.mat to *.txt is also available in the repository on zenodo above.
 
 # Code Overview
