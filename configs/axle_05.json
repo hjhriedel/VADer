@@ -4,12 +4,12 @@
   },
   "data_loader": {
     "name": "data_loader_04.DataLoader",
-    "data_dir": "E:/Riedel/transformed/Data TrigG1 new Code/",
+    "data_dir": "D:/Henrik Riedel/Data TrigG1 new Code 4/",
     "sl":false,
     "wl":true,
     "str":false,
     "acc":true,
-    "sl_num":4,
+    "sl_num":0,
     "wl_num":6,
     "str_num":8,
     "acc_num":10
@@ -34,7 +34,7 @@
   "trainer":{
     "name": "trainer.ModelTrainer",
     "run":"Data TrigG1 new Code - Gamma 2",
-    "num_epochs": 400,
+    "num_epochs": 300,
     "batch_size": 16,
     "shuffle": true,
     "verbose_training": 2,

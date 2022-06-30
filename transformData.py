@@ -13,33 +13,33 @@ def cropDataTables(X, y):
     example = X[y.min()-150:y.max()+500]
     label = label[y.min()-150:y.max()+500]
     return example, label.astype(int)
-    
-names = [["acc_li_", "idxl_acc"], ["acc_re_", "idxr_acc"]]
+
+    names = [["acc_li_", "idxl_acc"], ["acc_re_", "idxr_acc"]]
 
 def compressData(p):
     documentation = []
-    with zipfile.ZipFile(PATH) as zipper:
-        x = []
-        y = []
-        try:
-            for n in names: 
-                with io.BufferedReader(zipper.open(f"{FOLDER}/{n[0]}{p}.txt", mode='r')) as f:
-                # with io.BufferedReader(zipper.open(f"New Data - BIM2/{n[0]}{p}.txt", mode='r')) as f:
-                # with io.BufferedReader(zipper.open(f"{n[0]}{p}.txt", mode='r')) as f:
-                    x.append(np.genfromtxt(f, delimiter = ','))
-                with io.BufferedReader(zipper.open(f"{FOLDER}/{n[1]}{p}.txt", mode='r')) as f:
-                    y.append(np.genfromtxt(f, delimiter = ','))
-                documentation.append(f"{n[0]}{p} | {x[-1].shape} | {n[1]}{p} | {y[-1].shape}")
-            x = np.hstack(x)
-            y = np.hstack(y)       
-            x, y = cropDataTables(x, y.astype(int))   
-            documentation.append(f" ")
-            documentation.append(f"{n[0]}{p} | {x.shape} | {n[1]}{p} | {y.shape}")
-            documentation.append(f" ")
-            documentation.append(f" ")
-            np.savez(f"{BASE}/cropped/{TARGET}/{p}.npz", x=x, y=y)
-        except:
-            pass
+    # with zipfile.ZipFile(PATH) as zipper:
+    x = []
+    y = []
+    try:
+        for n in names: 
+            # with io.BufferedReader(zipper.open(f"{FOLDER}/{n[0]}{p}.txt", mode='r')) as f:
+            with open(f"{PATH}/{n[0]}{p}.txt", 'r') as f:
+                x.append(np.genfromtxt(f, delimiter = ','))
+            # with io.BufferedReader(zipper.open(f"{FOLDER}/{n[1]}{p}.txt", mode='r')) as f:
+            with open(f"{PATH}/{n[1]}{p}.txt", 'r') as f:
+                y.append(np.genfromtxt(f, delimiter = ','))
+            documentation.append(f"{n[0]}{p} | {x[-1].shape} | {n[1]}{p} | {y[-1].shape}")
+        x = np.hstack(x)
+        y = np.hstack(y)       
+        x, y = cropDataTables(x, y.astype(int))   
+        documentation.append(f" ")
+        documentation.append(f"{n[0]}{p} | {x.shape} | {n[1]}{p} | {y.shape}")
+        documentation.append(f" ")
+        documentation.append(f" ")
+        np.savez(f"{BASE}/cropped/{TARGET}/{p}.npz", x=x, y=y)
+    except:
+        pass
     with open(f"{BASE}/documentation {TARGET}.txt", 'w') as output:
         for row in documentation:
             output.write(row + '\n')
@@ -59,7 +59,7 @@ def toModelInput(name, config):
         s = []
         _key = "acc" #if i < 10 else "str"
         c = config[_key]           
-        
+
         for set in c['wl']:
             s.append(getWavelet(_x, set, config["fs"]))
             
@@ -71,7 +71,7 @@ def toModelInput(name, config):
 
 #['cgau1','cgau2','cmor','gaus2','mexh','morl','shan']
 def plotWL(time, signal, scales, waveletname = 'cgau1', cmap = 'magma', 
-                 ylabel = 'Frequencie in Hz', xlabel = 'Time in s', fs = 600,
+                 ylabel = 'Frequency [Hz]', xlabel = 'Time [s]', fs = 600,
                  contour = True, axle = None, name=None):
     
     coefficients, frequencies = pywt.cwt(signal, scales, waveletname, 1/fs)
@@ -114,8 +114,8 @@ def testSettings():
     
         fig, ax = plt.subplots(figsize=(14, 3))  
         ax.plot(np.arange(_x.size) / config_dict["fs"], _x, c='indigo', lw=0.5)
-        ax.set_ylabel(r'Acceleration in $\frac{m}{s^2}$', fontsize=16)
-        ax.set_xlabel('Time in s', fontsize=16)
+        ax.set_ylabel(r'Acceleration [$\frac{m}{s^2}$]', fontsize=16)
+        ax.set_xlabel('Time [s]', fontsize=16)
         if isinstance(_y, np.ndarray):
             _y = np.argwhere(_y==1)
             for axl in _y:
@@ -128,22 +128,23 @@ def testSettings():
 # testSettings()
 #%%      
 if __name__ == "__main__":        
-    
-    json_file = "../data_loader/transformConfigs/config_trans.json"
+
+    json_file = "data_loader/transformConfigs/config_trans.json"
     _, config_dict, _ = ut.get_config_from_json(json_file)
     
     TARGET = config_dict["target"]
     FOLDER = config_dict["folder"]
     BASE = "E:/Riedel"
-    PATH = f"{BASE}/cropped/{FOLDER}.zip"
+    PATH = f"D:/Garath/Daten bis Umstellung"
     os.makedirs(f"{BASE}/cropped/{TARGET}", exist_ok=True)
-    os.makedirs(f"{BASE}/transformed/{TARGET}", exist_ok=True)
     
 
     if config_dict["crop"]:
         Parallel(n_jobs=config_dict["n_jobs"])(delayed(compressData)(p) for p in range(1,config_dict["range"])) 
-    
-    names = os.listdir(f'{BASE}/cropped/{FOLDER}') 
+
+    BASE = "D:/Henrik Riedel"
+    os.makedirs(f"{BASE}/transformed/{TARGET}", exist_ok=True)    
+    names = os.listdir(f'{BASE}/cropped/{TARGET}') 
     
     Parallel(n_jobs=config_dict["n_jobs"])(delayed(toModelInput)(name,config_dict) for name in names)
 

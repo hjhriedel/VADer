@@ -1,4 +1,5 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
+from comet_ml import Experiment
 from utils.utils import process_config, create_dirs, get_args, create
 import sys, gc, time, os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -45,7 +46,6 @@ def main():
             p.join()
             p.close()
             gc.collect()
-            break
 
     except Exception as e:
         print(e)

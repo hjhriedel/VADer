@@ -19,7 +19,7 @@ class DataLoader():
         self.trainDS, self.valDS, self.testDS = self.preprocess()
         
     def preprocess(self, val_size=0.2, test_size=0.1): 
-        names = os.listdir(self.config.data_loader.data_dir)[:100]
+        names = os.listdir(self.config.data_loader.data_dir)
         
         nameTrain, nameVal = train_test_split(names, test_size = val_size+test_size, shuffle=True, random_state=42)
         nameVal, nameTest = train_test_split(nameVal, test_size = test_size/(test_size+val_size), shuffle=True, random_state=42)

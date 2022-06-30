@@ -4,8 +4,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Flatten, Reshape, Input, BatchNormalization, MaxPool2D, Concatenate, Add, Conv2DTranspose
 from tensorflow.keras.models import Model
 
-# metrics = [ma.acc, ma.mean_fs, ma.std_fs, ma.percent_neg, ma.percent_null, ma.percent_pos, ma.avg_neg, ma.avg_pos, ma.recall, ma.precision]
-metrics = [ma.f1, ma.recall, ma.precision, ma.f1_7, ma.recall7, ma.precision7, ma.f1_3, ma.recall3, ma.precision3, ma.mean_fs, ma.std_fs]
+metrics = [ma.f1, ma.recall, ma.precision, ma.mean_fs, ma.std_fs]
 
 class Model():
     def __init__(self, config, shape):
