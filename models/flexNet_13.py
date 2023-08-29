@@ -1,7 +1,7 @@
 # from base.base_model import BaseModel
 import models.metric_axles as ma
 import tensorflow as tf
-from tensorflow.keras.layers import Conv2D, Flatten, Reshape, Input, BatchNormalization, MaxPool2D, Concatenate, Add, Conv2DTranspose
+from tensorflow.keras.layers import Conv2D, Flatten, Reshape, Input, BatchNormalization, MaxPool2D, Concatenate, Add, Conv2DTranspose, GaussianNoise
 from tensorflow.keras.models import Model
 
 # metrics = [ma.acc, ma.mean_fs, ma.std_fs, ma.percent_neg, ma.percent_null, ma.percent_pos, ma.avg_neg, ma.avg_pos, ma.recall, ma.precision]
@@ -42,6 +42,7 @@ class Model():
         print('Required amount of scales: ', 2**pooling_steps)    
         
         bn = BatchNormalization()(input_data)
+        bn = GaussianNoise(0.5)(bn)
         c1 = Conv2D(n_filters, kernel_size = 3, padding="same", activation='relu')(bn)
         
         for _ in range(self.config.model.encode_layer):

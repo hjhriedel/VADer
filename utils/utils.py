@@ -46,13 +46,13 @@ def create_dirs(dirs):
             os.makedirs(dir_)
     return 0   
 
-def get_args():
+def get_args(v=""):
     argparser = argparse.ArgumentParser(description=__doc__)
     argparser.add_argument(
         '-cd', '--config-dir',
         dest='config',
         metavar='C',
-        default=r'configs',
+        default=r'configs'+v,
         help='The Configuration file')
 
     argparser.add_argument(

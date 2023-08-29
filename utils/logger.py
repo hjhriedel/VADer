@@ -14,7 +14,7 @@ class CometLogger:
             log_env_details=True,
             log_env_gpu=True,
             api_key="RO93KzhKY0GcxdzCQQg1eyEC1",
-            project_name="vader",
+            project_name="vader-comparison",
             workspace="imsdcomet")
 
         self.experiment.set_name(run)

@@ -1,0 +1,59 @@
+{
+  "exp": {
+    "name": "new metrics"
+  },
+  "data_loader": {
+    "name": "data_loader_22.DataLoader",
+    "data_dir": "data/cropped/Data TrigG1 new Code 6/",
+    "sl": false,
+    "wl": false,
+    "str": false,
+    "acc": true,
+    "sl_num": 0,
+    "wl_num": 6,
+    "str_num": 8,
+    "acc_num": 10,
+    "every_nth": 1,
+    "fold": 500
+  },
+  "model": {
+    "name": "flexNet_05.Model",
+    "learning_rate": 0.001,
+    "optimizer": "adam",
+    "encode_layer": 2,
+    "decode_layer": 2,
+    "bottleneck_layer": 2,
+    "concat": false,
+    "pooling_steps": 4,
+    "label_as_img": false,
+    "n_filters": 16,
+    "batchnorm": true,
+    "loss": "binary_crossentropy",
+    "gamma": 2.5,
+    "lr": 0.001,
+    "pooling_size": 3,
+    "kernel_start": 9,
+    "kernel_mid": 9,
+    "kernel_end": 9
+  },
+  "trainer": {
+    "name": "trainer.ModelTrainer",
+    "run": "VADER",
+    "num_epochs": 300,
+    "batch_size": 16,
+    "shuffle": true,
+    "verbose_training": 1,
+    "save_pickle": true,
+    "steps_per_epoch": 150,
+    "validation_percentage": 0.2
+  },
+  "callbacks": {
+    "checkpoint_monitor": "val_f1",
+    "checkpoint_mode": "max",
+    "checkpoint_save_best_only": true,
+    "checkpoint_save_weights_only": true,
+    "checkpoint_verbose": 1,
+    "patience": 4,
+    "min_delta": 0
+  }
+}
