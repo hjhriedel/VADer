@@ -3,10 +3,10 @@
     "name": "new metrics"
   },
   "data_loader": {
-    "name": "data_loader_22.DataLoader",
-    "data_dir": "data/cropped/Data TrigG1 new Code 6/",
+    "name": "data_loader_24.DataLoader",
+    "data_dir": "data/transformed/Data TrigG1 new Code 4/",
     "sl": false,
-    "wl": false,
+    "wl": true,
     "str": false,
     "acc": true,
     "sl_num": 0,
@@ -17,16 +17,16 @@
     "fold": 500
   },
   "model": {
-    "name": "flexNet_05.Model",
+    "name": "flexNet_16.Model",
     "learning_rate": 0.001,
     "optimizer": "adam",
-    "encode_layer": 2,
-    "decode_layer": 2,
+    "encode_layer": 1,
+    "decode_layer": 1,
     "bottleneck_layer": 2,
     "concat": false,
     "pooling_steps": 4,
     "label_as_img": false,
-    "n_filters": 16,
+    "n_filters": 32,
     "batchnorm": true,
     "loss": "binary_crossentropy",
     "gamma": 2.5,
@@ -38,10 +38,10 @@
   },
   "trainer": {
     "name": "trainer.ModelTrainer",
-    "run": "VADER",
+    "run": "VAD",
     "num_epochs": 300,
     "batch_size": 16,
-    "shuffle": true,
+    "shuffle": false,
     "verbose_training": 1,
     "save_pickle": true,
     "steps_per_epoch": 150,
@@ -53,7 +53,7 @@
     "checkpoint_save_best_only": true,
     "checkpoint_save_weights_only": true,
     "checkpoint_verbose": 1,
-    "patience": 4,
+    "patience": 6,
     "min_delta": 0
   }
 }

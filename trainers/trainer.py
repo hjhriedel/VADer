@@ -48,7 +48,8 @@ class ModelTrainer():
                 min_lr=0.000001,
                 verbose=1,
                 mode=self.config.callbacks.checkpoint_mode,
-                cooldown=int(self.config.callbacks.patience/2)
+                cooldown=int(self.config.callbacks.patience/2),
+                min_delta=0.001
             )
         )
         self.callbacks.append(
@@ -57,19 +58,19 @@ class ModelTrainer():
                 patience=self.config.callbacks.patience,
                 restore_best_weights=True,
                 mode=self.config.callbacks.checkpoint_mode,
-                min_delta=self.config.callbacks.min_delta
+                min_delta=0.001
             )
         )
 
     def train(self):        
         self.model.fit(self.train_data,
-            workers=tf.data.AUTOTUNE, 
+            workers=4, 
             epochs=self.config.trainer.num_epochs,
             verbose=self.config.trainer.verbose_training,
             validation_data=self.val_data,
             callbacks=self.callbacks,
-            use_multiprocessing=False,
-            max_queue_size=tf.data.AUTOTUNE
+            use_multiprocessing=True,
+            max_queue_size=50
             )
         
         self.model.save(os.path.join(self.config.callbacks.checkpoint_dir, self.timestamp, self.run))
@@ -83,11 +84,11 @@ class ModelTrainer():
         data = np.load(PATH, allow_pickle=True)
         x, y = data['x'], data['y']
         data.close        
-        x = (x + x.min())/(x.max()-x.min())
-        try:
-            x = x[:,::self.config.data_loader.every_nth]
-        except:
-            pass
+        #x = (x + x.min())/(x.max()-x.min())
+        #try:
+        #    x = x[:,::self.config.data_loader.every_nth]
+        #except:
+        #    pass
         while x.ndim < 4:
             x = np.expand_dims(x, axis=1)  
         pad_size = int(self.config.model.pooling_size**self.config.model.pooling_steps)
@@ -103,7 +104,7 @@ class ModelTrainer():
             nameTest = np.loadtxt(f"data/test_names00.csv", dtype=str).tolist()
         else:
             nameTest = np.loadtxt(f"data/test_names.csv", dtype=str).tolist()
-        vPATH = "E:/Riedel/neue Geschwindigkeiten"
+        vPATH = "data/neue Geschwindigkeiten"
         results = []
         for name in tqdm(nameTest):
             vl = np.vstack(np.genfromtxt(f"{vPATH}/v_idxl_acc{name[:-4]}.txt", delimiter=","))
@@ -116,7 +117,7 @@ class ModelTrainer():
                 results.append([name, i, p, true_values, v])
                 i += 1
 
-        with open(self.timestamp + self.run + 'test.bin', "wb") as output:
+        with open('final/' + self.timestamp + self.run + 'test.bin', "wb") as output:
             pickle.dump(results, output)
 
     def end(self):

@@ -14,10 +14,13 @@ class CometLogger:
             log_env_details=True,
             log_env_gpu=True,
             api_key="RO93KzhKY0GcxdzCQQg1eyEC1",
-            project_name="vader-comparison",
+            project_name="vader-2-2",
             workspace="imsdcomet")
 
         self.experiment.set_name(run)
+        # split run at blankspaces
+        for _r in run.split():
+            self.experiment.add_tag(_r)
         self.experiment.log_code(file_name=path_to_config)
             
     
